@@ -1,3 +1,4 @@
+![HealthAI Assistant](https://github.com/user-attachments/assets/3c2a66be-4df9-4c91-94a6-36416f5bdc0a)
 
 # HealthAI Assistant
 

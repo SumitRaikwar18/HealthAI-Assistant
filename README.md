@@ -13,7 +13,7 @@ This project uses the following free KendoReact components:
 | 2. Input | `<Input value={value} onChange={onChange} />` | src/components/KendoInput.tsx |
 | 3. Label | `<Label editorId={htmlFor} className={className}>{text}</Label>` | src/components/KendoLabel.tsx |
 | 4. Chip | `<Chip text={text} removable={removable} />` | src/components/KendoChip.tsx |
-| 5. Avatar | `<Avatar type={type} size={size}>{src ? <img src={src} alt={alt} /> : (initials || 'U')}</Avatar>` | src/components/KendoAvatar.tsx |
+| 5. Avatar | `<Avatar type="circle" size="medium">{src ? <img src={src} alt="User" /> : "U"}</Avatar>` | src/components/KendoAvatar.tsx |
 | 6. Loader | `<Loader size={size} type={type} />` | src/components/KendoLoader.tsx |
 | 7. Switch | `<Switch checked={checked} onChange={onChange} />` | src/components/KendoSwitch.tsx |
 | 8. Badge | `<Badge themeColor={themeColor} rounded={rounded}>{children}</Badge>` | src/components/KendoBadge.tsx |

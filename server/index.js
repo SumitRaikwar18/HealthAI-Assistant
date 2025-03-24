@@ -1,12 +1,19 @@
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch'); // Remove if using Node.js 18+
+const fetch = require('node-fetch'); // Remove if using Node.js 18+ (Vercel uses Node.js 18 by default)
 
 const app = express();
 
-app.use(cors({ origin: process.env.VERCEL_URL || 'http://localhost:3000' })); // Vercel sets VERCEL_URL
+// Configure CORS to allow requests from the same Vercel domain (or localhost for local testing)
+app.use(cors({ origin: process.env.VERCEL_URL || 'http://localhost:3000' }));
 app.use(express.json());
 
+// Optional: Handle GET requests to /api/symptom-analyze for debugging
+app.get('/api/symptom-analyze', (req, res) => {
+  res.send('This is the Symptom Analyzer API. Use POST to analyze symptoms.');
+});
+
+// Handle POST requests to /api/chat
 app.post('/api/chat', async (req, res) => {
   console.log('Received /api/chat request:', req.body);
   const { messages } = req.body;
@@ -26,12 +33,14 @@ app.post('/api/chat', async (req, res) => {
       }),
     });
 
+    console.log('OpenAI response status:', response.status);
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`Failed to fetch from OpenAI: ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('OpenAI response data:', data);
     res.json({ content: data.choices[0].message.content });
   } catch (error) {
     console.error('Error in /api/chat:', error.message);
@@ -39,6 +48,7 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// Handle POST requests to /api/symptom-analyze
 app.post('/api/symptom-analyze', async (req, res) => {
   console.log('Received /api/symptom-analyze request:', req.body);
   const { userInput, previousMessages } = req.body;
@@ -63,12 +73,14 @@ app.post('/api/symptom-analyze', async (req, res) => {
       }),
     });
 
+    console.log('OpenAI response status:', response.status);
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`Failed to fetch from OpenAI: ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('OpenAI response data:', data);
     res.json({ content: data.choices[0].message.content });
   } catch (error) {
     console.error('Error in /api/symptom-analyze:', error.message);
@@ -76,5 +88,5 @@ app.post('/api/symptom-analyze', async (req, res) => {
   }
 });
 
-// Export for Vercel serverless function
+// Export the app for Vercel serverless functions
 module.exports = app;

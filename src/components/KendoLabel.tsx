@@ -15,7 +15,7 @@ const KendoLabel: React.FC<KendoLabelProps> = ({
 }) => {
   return (
     <Label 
-      htmlFor={htmlFor} 
+      editorId={htmlFor} 
       className={className}
     >
       {text}
